@@ -2,17 +2,15 @@
 
 src_dir=`pwd`
 
-echo $src_dir
 find . -type d | grep -v .git | while read d; do 
   cd $src_dir/$d 
   if [ -d ".git" ]; then
-    echo "in"
     git_n=`git remote -v |grep aaaaam |grep push |grep origin |cut -d/ -f2 |cut -d'(' -f1` 
+    git_n=`git remote -v |grep aaaaam |grep push |cut -d/ -f2 |cut -d'(' -f1` 
     if [ -n "${git_n-set}" ]; then
-      git remote set-url origin https://github.com/bam241/$git_n
-    else
+      #git remote set-url origin https://github.com/bam241/$git_n
+      echo $git_n
       git remote -v
     fi
-    echo "out"
   fi
 done
