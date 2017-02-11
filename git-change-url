@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Utility to change the connection method for a git repo.
-# taken from https://gist.github.com/sankalp-khare/11356560
+
 # === Colour Definitions ===
 red='\x1B[0;31m'
 green='\x1B[0;32m'
 purple='\x1B[0;35m'
 orange='\x1B[0;33m'
 # No Color, i.e. turn off color
-nc='\e[0m'
+nc='\x1B[0m'
 
 # https://github.com/foo/bar.git
 # git@github.com:foo/bar.git
@@ -21,7 +21,7 @@ nc='\e[0m'
 
 function print_usage(){
     echo -e ${red}Usage:${nc} $0 --to-ssh   ${orange}# converts https url to ssh url${nc}
-    echo -e        $0 --to-https ${orange}# converts ssh url to https url${nc}
+    echo -e "     " $0 --to-https ${orange}# converts ssh url to https url${nc}
 }
 
 function in_gitdir(){
@@ -37,11 +37,11 @@ function in_gitdir(){
 }
 
 function convert_to_ssh(){
-    gsed -r -i 's:https\://([^/]+)/(.*\.git):git@\1\:\2:g' $(git rev-parse --git-dir)/config
+    gsed -r -i 's:https\:\/\/github\.com\/:git\@github.com\::g' $(git rev-parse --git-dir)/config
 }
 
 function convert_to_https(){
-    gsed -r -i 's:git@([^/]+)\:(.*\.git):https\://\1/\2:g' $(git rev-parse --git-dir)/config
+    gsed -r -i 's:git\@github.com\::https\:\/\/github\.com\/:g' $(git rev-parse --git-dir)/config
 }
 
 function main(){
