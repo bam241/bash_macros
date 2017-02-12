@@ -2,8 +2,7 @@
 Macros
 ######
 
-
-#. `git-change-url`: 
+# `git-change-url`: 
     
     - Description: allows to switch beween https and ssh the remote in a git repo
     - Usage: 
