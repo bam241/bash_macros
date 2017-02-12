@@ -2,18 +2,25 @@
 
 user='bam241'
 
+if [ $# -gt 1 ]
+then
+    echo "to much paramter..."
+    exit(1)
+fi
 
 if [ $# -eq 1 ]
 then
-
+    # Agrs
     curl -u "$user" https://api.github.com/user/repos -d '{"name":"'$@'"}'
     git clone git@github.com:${user}/${@}.git
     cd ${@}
     git-change-url --to-ssh
+
 else
     
     if [ ! -d ".git" ] 
     then
+        #No git versionning
         git init
     else
     
@@ -21,51 +28,56 @@ else
         
         if [ "$remote_line" -gt 2 ] 
         then
-        
+            # Too much remote
             echo "To much remote, you have to deal with this manually!"
-        
+            exit(1)
+
         elif [ "$remote_line" -eq 0 ]
         then
-            
+            # No remote 
             curl -u 'bam241' https://api.github.com/user/repos -d '{"name":"'${PWD##*/}'"}'
             git remote add origin git@github.com:bam241/${PWD##*/}.git
             git-change-url --to-ssh
         
         elif [ "$remote_line" -eq 2 ] 
         then
-        
+            # Only one remote: analysing the remote
             remote=$( git remote -v| grep push |cut -f2 |cut -d' ' -f1 )
             r_name=$( git remote -v |grep push |cut -f1 )
-            echo $remote 
+            
             if [[ $remote =~ git\@ ]] 
             then
-            
+                # Remote with ssh url
                 r_user=$( echo $remote |cut -d":" -f2 |cut -d"/" -f1 )
                 r_project=$( echo $remote |cut -d":" -f2 |cut -d"/" -f2 )
             
             elif [ ${remote} =~ https\:\/\/ ]
             then
+                # Remote with https url
                 r_user=$( echo ${remote} | cut -d"/" -f4 )
                 r_projet=$( echo ${remote} | cut -d"/" -f5 )
             
             else
-            
+                # Un-reconized url
                 echo "Unable to read the remote... please procced manually!!"
-                exit
+                exit(1)
             
             fi
+            
             if [[ "$user" == "$r_user" ]]
             then
+                # User already own the remote...
                 echo "Origin pointing to your fork/repo, nothing to do..."
-                exit
+                exit(0)
             fi
             
-            # create pull request
+            # cFork the repo then setup the origin/upstream remotes
             curl -X POST -u "$user" "https://api.github.com/repos/$r_user/$r_project/forks"
             [ $? = 0 ] || abort "fork failed"
             git remote rm $r_name
             git remote add origin git@github.com:$user/$r_project
             git remote add upstream git@github.com:$r_user/$r_project
+        
         fi
     fi
 fi
