@@ -8,7 +8,7 @@ Macros
         - `git-change-url` --to-ssh convert https url to ssh
         - `git-change-url` --to-https conver ssh url to https one.
 
-2. `py_switch`: allows to switch between py 3.5 and py 2.7, only useful on
+2. `py_switch`: allows to switch between py 3.5 and py 2.7, working only on
     MacOS using macport
 
 3. `set_all_remote`: change all remote from one username to another. Actually
