@@ -9,5 +9,4 @@ git-change-url:
     - Usage: 
         
         - `git-change-url` --to-ssh convert https url to ssh
-        
         - `git-change-url` --to-https conver ssh url to https one.
