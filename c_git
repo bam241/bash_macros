@@ -1,17 +1,71 @@
 #!/bin/zsh
 
+user='bam241'
+
+
 if [ $# -eq 1 ]
 then
-    curl -u 'bam241' https://api.github.com/user/repos -d '{"name":"'$@'"}'
-    git clone git@github.com:bam241/${@}.git
+
+    curl -u "$user" https://api.github.com/user/repos -d '{"name":"'$@'"}'
+    git clone git@github.com:${user}/${@}.git
     cd ${@}
     git-change-url --to-ssh
 else
-    if [ ! -d ".git" ]
+    
+    if [ ! -d ".git" ] 
     then
         git init
+    else
+    
+        remote_line=$( git remote -v | wc -l )
+        
+        if [ "$remote_line" -gt 2 ] 
+        then
+        
+            echo "To much remote, you have to deal with this manually!"
+        
+        elif [ "$remote_line" -eq 0 ]
+        then
+            
+            curl -u 'bam241' https://api.github.com/user/repos -d '{"name":"'${PWD##*/}'"}'
+            git remote add origin git@github.com:bam241/${PWD##*/}.git
+            git-change-url --to-ssh
+        
+        elif [ "$remote_line" -eq 2 ] 
+        then
+        
+            remote=$( git remote -v| grep push |cut -f2 |cut -d' ' -f1 )
+            r_name=$( git remote -v |grep push |cut -f1 )
+            echo $remote 
+            if [[ $remote =~ git\@ ]] 
+            then
+            
+                r_user=$( echo $remote |cut -d":" -f2 |cut -d"/" -f1 )
+                r_project=$( echo $remote |cut -d":" -f2 |cut -d"/" -f2 )
+            
+            elif [ ${remote} =~ https\:\/\/ ]
+            then
+                r_user=$( echo ${remote} | cut -d"/" -f4 )
+                r_projet=$( echo ${remote} | cut -d"/" -f5 )
+            
+            else
+            
+                echo "Unable to read the remote... please procced manually!!"
+                exit
+            
+            fi
+            if [[ "$user" == "$r_user" ]]
+            then
+                echo "Origin pointing to your fork/repo, nothing to do..."
+                exit
+            fi
+            
+            # create pull request
+            curl -X POST -u "$user" "https://api.github.com/repos/$r_user/$r_project/forks"
+            [ $? = 0 ] || abort "fork failed"
+            git remote rm $r_name
+            git remote add origin git@github.com:$user/$r_project
+            git remote add upstream git@github.com:$r_user/$r_project
+        fi
     fi
-    curl -u 'bam241' https://api.github.com/user/repos -d '{"name":"'${PWD##*/}'"}'
-    git remote add origin git@github.com:bam241/${PWD##*/}.git
-    git-change-url --to-ssh
 fi
