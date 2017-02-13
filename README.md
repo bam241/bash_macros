@@ -19,5 +19,5 @@ Macros
         - without `args`, check if the actual folder is under git versionning, if
           not `git init` it, then create a new ``GitHub`` named as the root folder
           and add the remote,
-        - with `args, create a new ``GitHub`` repo name as the `args`, then
+        - with `args`, create a new ``GitHub`` repo name as the `args`, then
           clone it locally.
