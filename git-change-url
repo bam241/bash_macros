@@ -19,6 +19,14 @@ nc='\x1B[0m'
 # ssh url pattern   : git@<website>:<gitpath>
 # https url pattern : https://<website>/<gitpath>
 
+if [[ `uname -a`i =~ 'Darwin' ]]
+then
+    sed_ex='gsed'
+else
+    sed_ex='sed'
+fi
+
+
 function print_usage(){
     echo -e ${red}Usage:${nc} $0 --to-ssh   ${orange}# converts https url to ssh url${nc}
     echo -e "     " $0 --to-https ${orange}# converts ssh url to https url${nc}
@@ -37,11 +45,11 @@ function in_gitdir(){
 }
 
 function convert_to_ssh(){
-    gsed -r -i 's:https\:\/\/github\.com\/:git\@github.com\::g' $(git rev-parse --git-dir)/config
+    $sed_ex -r -i 's:https\:\/\/github\.com\/:git\@github.com\::g' $(git rev-parse --git-dir)/config
 }
 
 function convert_to_https(){
-    gsed -r -i 's:git\@github.com\::https\:\/\/github\.com\/:g' $(git rev-parse --git-dir)/config
+    $sed_ex -r -i 's:git\@github.com\::https\:\/\/github\.com\/:g' $(git rev-parse --git-dir)/config
 }
 
 function main(){
