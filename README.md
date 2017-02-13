@@ -15,7 +15,7 @@ Macros
    setup to change Baaaaam into bam241... Can be easily change if needed...
 
 4. `c_git`: 
-    -Usage: 
+    - Usage: 
         - without `args`, check if the actual folder is under git versionning, if
           not `git init` it, then create a new ``GitHub`` named as the root folder
           and add the remote,
