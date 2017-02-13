@@ -18,6 +18,10 @@ Macros
     - Usage: 
         - without `args`, check if the actual folder is under git versionning, if
           not `git init` it, then create a new ``GitHub`` named as the root folder
-          and add the remote,
+          and add the remote, If the folder is already on git versionning, check
+          is there is a remote, if there is one, not pointing on one of your
+          GitHub repos, try to fork it, then setup both `origin` and `upstream`
+          remote, if there is no remote, create a repo on your GitHub account,
+          and add the remote as origin,
         - with `args`, create a new ``GitHub`` repo name as the `args`, then
           clone it locally.
