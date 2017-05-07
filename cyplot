@@ -19,5 +19,5 @@ fi
 out_db=${in_db}_
 
 cp $in_db $out_db
-
 cyan -db $out_db flowgraph -proto | dot -Tpng > flow.png
+rm -rf $out_db
