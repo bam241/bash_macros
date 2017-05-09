@@ -25,3 +25,5 @@ Macros
           and add the remote as origin,
         - with `args`, create a new ``GitHub`` repo name as the `args`, then
           clone it locally.
+5. `clang-format`: allow usage of clang-format, taken from
+   https://github.com/travisjeffery/ClangFormat-Xcode.
