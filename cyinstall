@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+if [[ ${PWD##*/} =~ cyclus ]]
+then
+   python install.py --clean-build -j4
+elif [[ ${PWD##*/} =~ 'cycamore' ]]
+then
+   python install.py --clean-build -j4
+elif [[ ${PWD##*/} =~ cymetric ]]
+then
+    python setup.py install --prefix $(cyclus --install-path)
+else
+    if [ ! -d "install.py" ]
+    then
+        echo "install.py missing..."
+    else
+        python install.py --clean-build -j4
+    fi
+fi
