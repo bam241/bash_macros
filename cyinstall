@@ -10,7 +10,7 @@ elif [[ ${PWD##*/} =~ cymetric ]]
 then
     python setup.py install --prefix $(cyclus --install-path)
 else
-    if [ ! -d "install.py" ]
+    if [ ! -f "./install.py" ]
     then
         echo "install.py missing..."
     else
