@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 # Utility to change the connection method for a git repo.
+# taken from https://gist.github.com/sankalp-khare/11356560
+
+
 
 # === Colour Definitions ===
 red='\x1B[0;31m'
