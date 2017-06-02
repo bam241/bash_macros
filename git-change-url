@@ -19,7 +19,7 @@ nc='\x1B[0m'
 # ssh url pattern   : git@<website>:<gitpath>
 # https url pattern : https://<website>/<gitpath>
 
-if [[ `uname -a`i =~ 'Darwin' ]]
+if [[ `uname -a` =~ 'Darwin' ]]
 then
     sed_ex='gsed'
 else
@@ -38,9 +38,9 @@ function in_gitdir(){
 
     if (( $? == 0 ))
     then
-	return 0
+    return 0
     else
-	return 1
+    return 1
     fi
 }
 
@@ -56,14 +56,14 @@ function main(){
     if [ in_gitdir ]
     then
         if [[ "$1" == "to-ssh" ]]
-	      then
-	        convert_to_ssh
-	      else
-	        convert_to_https
-	      fi
+          then
+            convert_to_ssh
+          else
+            convert_to_https
+          fi
     else
         print_usage
-	      exit 3
+          exit 3
     fi
 }
 
