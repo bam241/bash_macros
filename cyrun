@@ -1,0 +1,18 @@
+#!/bin/zsh
+if [ $# -lt 1 ]
+then
+    echo "to much paramter..."
+    exit(1)
+fi
+
+for var in "$@"
+do
+    if [[ $var =~ '.xml' ]]; then
+
+        name=`echo "${var%%.*}.sqlite"`
+        rm $name; cyclus $var -o $name -v2
+    
+    else
+        echo "$var is not a xml file: skeeped!"
+    fi    
+done
