@@ -1,0 +1,22 @@
+#!/bin/sh
+
+rm -rf .git/refs/original/refs/heads/*
+rm -rf .git/refs/original/refs/tags/*
+
+
+
+git filter-branch --env-filter '
+OLD_EMAIL="leniau@0e7d625b-0364-4367-a6be-d5be4a48d228"
+CORRECT_NAME="Baptiste LENIAU"
+CORRECT_EMAIL="baptiste.leniau@subatech.in2p3.fr"
+if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_COMMITTER_NAME="$CORRECT_NAME"
+    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_AUTHOR_NAME="$CORRECT_NAME"
+    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
