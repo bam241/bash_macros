@@ -1,0 +1,33 @@
+#!/bin/zsh
+
+if [[ $# -lt 1 ]]; then
+    echo "to much paramter..."
+    exit
+fi
+
+case ${1} in
+    
+    mbmore)
+        cd $CYCLUS_PATH/mbmore
+        ;;
+    
+    cycamore)
+        cd $CYCLUS_PATH/cycamore
+        ;;
+        
+    cyclus)
+        cd $CYCLUS_PATH/cyclus
+        ;;
+
+    cyclass)
+        cd $CYCLUS_PATH/cyclass
+        ;;
+
+    app)
+        cd $APP_PATH
+        ;;
+
+    work)
+        cd ~/work
+        ;;
+esac
