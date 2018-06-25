@@ -9,7 +9,7 @@ for var in "$@"
 do
     if [[ $var =~ '.xml' ]]; then
 
-        name=`echo "${var%%.*}.sqlite"`
+        name="${var%%.*}.h5"
         rm $name; cyclus $var -o $name -v2
     
     else
