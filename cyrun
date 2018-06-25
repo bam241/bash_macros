@@ -1,18 +1,44 @@
 #!/bin/zsh
-if [ $# -lt 1 ]
-then
-    echo "to much paramter..."
-    exit(1)
-fi
+#if [ $# -lt 1 ]
+#then
+#    echo "to much paramter..."
+#    exit(1)
+#fi
+#
+#for var in "$@"
+#do
+#    if [[ $var =~ '.xml' ]]; then
+#
+#        name="${var%%.*}.h5"
+#        rm $name; cyclus $var -o $name -v2
+#    
+#    else
+#        echo "$var is not a xml file: skeeped!"
+#    fi    
+#done
 
-for var in "$@"
+
+verbose="2"
+var=""
+key=""
+value=""
+for keyValue in "$@"
 do
-    if [[ $var =~ '.xml' ]]; then
-
-        name="${var%%.*}.h5"
-        rm $name; cyclus $var -o $name -v2
-    
-    else
-        echo "$var is not a xml file: skeeped!"
-    fi    
+  case "${prefix}${keyValue}" in
+    -v*)        key="-v";     value="${keyValue:2}";;
+    *)                                      value=$keyValue;;
+  esac
+  case $key in
+    -v)  verbose="${value}";           prefix=""; key="";;
+    *)   var="${keyValue}";;
+  esac
 done
+
+if [[ $var =~ '.xml' ]]; then
+
+    name="${var%%.*}.h5"
+    rm $name; cyclus $var -o $name -v$verbose
+
+else
+    echo "$var is not a xml file: skeeped!"
+fi    
