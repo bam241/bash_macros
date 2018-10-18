@@ -47,12 +47,15 @@ function in_gitdir(){
     fi
 }
 
+
 function convert_to_ssh(){
-    $sed_ex -r -i 's:https\:\/\/github\.com\/:git\@github.com\::g' $(git rev-parse --git-dir)/config
+    remote=$(git remote -v |grep "origin" |grep "push" | cut -d"/" -f3 )
+    $sed_ex -r -i "s:https\:\/\/${remote}\/:git\@${remote}\::g" $(git rev-parse --git-dir)/config
 }
 
 function convert_to_https(){
-    $sed_ex -r -i 's:git\@github.com\::https\:\/\/github\.com\/:g' $(git rev-parse --git-dir)/config
+    remote=$(git remote -v |grep "origin" |grep "push" |cut -d"@" -f2 |cut -d":" -f1)
+    $sed_ex -r -i "s:git\@${remote}\::https\:\/\/${remote}\/:g" $(git rev-parse --git-dir)/config
 }
 
 function main(){
