@@ -2,7 +2,8 @@
 
 
 verbose="2"
-out=""
+out="h5"
+
 var=""
 key=""
 value=""
