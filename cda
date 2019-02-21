@@ -1,0 +1,15 @@
+#!/bin/zsh
+function cda
+{
+    if [ $# -eq 0 ]; then
+        cd $APP_PATH
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+        if [ -d ${APP_PATH}/$1 ]; then  
+            cd ${APP_PATH}/$1
+        else
+            echo "$# does not exist as an application folder"
+        fi
+    fi
+}
