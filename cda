@@ -13,3 +13,4 @@ function cda
         fi
     fi
 }
+compctl -W $APP_PATH -/ cda
