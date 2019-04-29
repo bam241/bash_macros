@@ -1,0 +1,48 @@
+#!/bin/zsh
+function cda
+{
+    if [ $# -eq 0 ]; then
+        cd $APP_PATH
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+        if [ -d ${APP_PATH}/$1 ]; then  
+            cd ${APP_PATH}/$1
+        else
+            echo "$# does not exist as an application folder"
+        fi
+    fi
+}
+compctl -W $APP_PATH -/ cda
+
+function cdw
+{
+    if [ $# -eq 0 ]; then
+        cd $WORK_PATH
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+        if [ -d ${WORK_PATH}/$1 ]; then  
+            cd ${WORK_PATH}/$1
+        else
+            echo "$# does not exist as an work folder"
+        fi
+    fi
+}
+compctl -W $WORK_PATH -/ cdw
+
+function cdz
+{
+    if [ $# -eq 0 ]; then
+        cd ${HOME}/.zsh_config
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+        if [ -d ${WORK_PATH}/$1 ]; then  
+            cd ${WORK_PATH}/$1
+        else
+            echo "$# does not exist as an work folder"
+        fi
+    fi
+}
+compctl -W ${HOME}/.zsh_config -/ cdz
