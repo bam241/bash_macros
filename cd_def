@@ -38,8 +38,8 @@ function cdz
     elif [ $# -gt 1 ]; then
         echo "too many parameters..."
     else
-        if [ -d ${WORK_PATH}/$1 ]; then  
-            cd ${WORK_PATH}/$1
+        if [ -d ${HOME}/.zsh_config/$1 ]; then  
+            cd ${HOME}/.zsh_config/$1
         else
             echo "$# does not exist as an work folder"
         fi
