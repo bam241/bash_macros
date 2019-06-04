@@ -1,11 +1,22 @@
 #!/bin/zsh
 
+j_option=1
+if [[ -z "${CORE_MAKE}" ]] 
+then
+    j_option=1
+    
+else
+    j_option=${CORE_MAKE}
+fi
+
+echo ${j_option}
+
 if [[ ${PWD##*/} =~ cyclus ]]
 then
-   python install.py --clean-build -j4
+   python install.py --clean-build -j$j_option
 elif [[ ${PWD##*/} =~ 'cycamore' ]]
 then
-   python install.py --clean-build -j4
+   python install.py --clean-build -j$j_option
 elif [[ ${PWD##*/} =~ cymetric ]]
 then
     python setup.py install --prefix $(cyclus --install-path)
