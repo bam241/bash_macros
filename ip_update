@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+ip=`/sbin/ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d" " -f2`
+
+if [[ $ip =~ 10. ]]; then
+    echo "hostname $ip" > ~/Desktop/.${COMP}_ip
+fi
