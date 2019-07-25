@@ -34,25 +34,28 @@ else
     elif [ "$remote_line" -eq 0 ]
     then
         # No remote 
+        echo ${PWD##*/}
         curl -u "$user:$token" https://api.github.com/user/repos -d '{"name":"'${PWD##*/}'"}'
         git remote add origin git@github.com:bam241/${PWD##*/}.git
         git-change-url --to-ssh
     elif [ "$remote_line" -eq 2 ] 
     then
+        echo ${PWD##*/}
         # Only one remote: analysing the remote
         remote=$( git remote -v| grep push |cut -f2 |cut -d' ' -f1 )
         r_name=$( git remote -v |grep push |cut -f1 )
         
-        if [[ $remote =~ git ]] 
+        if [[ $remote =~ http ]] 
+        then
+            # Remote with https url
+            echo $remote
+            r_user=$( echo ${remote} | cut -d"/" -f4 )
+            r_project=$( echo ${remote} | cut -d"/" -f5 )
+        elif [[ $remote =~ git ]] 
         then
             # Remote with ssh url
             r_user=$( echo $remote |cut -d":" -f2 |cut -d"/" -f1 )
             r_project=$( echo $remote |cut -d":" -f2 |cut -d"/" -f2 )
-        elif [ ${remote} =~ https\:\/\/ ]
-        then
-            # Remote with https url
-            r_user=$( echo ${remote} | cut -d"/" -f4 )
-            r_project=$( echo ${remote} | cut -d"/" -f5 )
         else
             # Un-reconized url
             echo "Unable to read the remote... please procced manually!!"

@@ -46,3 +46,20 @@ function cdz
     fi
 }
 compctl -W ${HOME}/.zsh_config -/ cdz
+
+function cdp
+{
+    if [ $# -eq 0 ]; then
+        cd ${WORK_PATH}/play
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+
+        if [ -d ${WORK_PATH}/play/$1 ]; then  
+            cd ${WORK_PATH}/play/$1
+        else
+            echo "$# does not exist as an work folder"
+        fi
+    fi
+}
+compctl -W ${WORK_PATH}/play -/ cdp
