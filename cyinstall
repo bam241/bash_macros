@@ -1,22 +1,33 @@
 #!/bin/zsh
 
-j_option=1
-if [[ -z "${CORE_MAKE}" ]] 
-then
-    j_option=1
-    
-else
-    j_option=${CORE_MAKE}
-fi
 
-echo ${j_option}
+
+core="1"
+
+var=""
+key=""
+value=""
+for keyValue in "$@"
+do
+  case "${prefix}${keyValue}" in
+    -j*)        key="-j";     value="${keyValue:2}";;
+    *)                                      value=$keyValue;;
+  esac
+  case $key in
+    -j)  core="${value}";           prefix=""; key="";;
+    *)   var="${keyValue}";;
+  esac
+done
+
+echo "INSTALL WITH ${core} CORES"
+
 
 if [[ ${PWD##*/} =~ cyclus ]]
 then
-   python install.py --clean-build -j$j_option
+   python install.py --clean-build -j$core
 elif [[ ${PWD##*/} =~ 'cycamore' ]]
 then
-   python install.py --clean-build -j$j_option
+   python install.py --clean-build -j$core
 elif [[ ${PWD##*/} =~ cymetric ]]
 then
     python setup.py install --prefix $(cyclus --install-path)
@@ -25,6 +36,6 @@ else
     then
         echo "install.py missing..."
     else
-        python install.py --clean-build -j4
+        python install.py --clean-build -j$core
     fi
 fi
