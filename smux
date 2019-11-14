@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+
+function smux
+{
+    if [ $# -eq 0 ]; then
+        ssh hum -t `tmux attach -tmain`
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+        ssh -t hum tmux attach -t$1
+    fi
+}
+
+session_list=$(ssh hum -t -q tmux list-sessions |cut -d":" -f1 | tr '\n' ' ') 2> /dev/null 
+
+compctl -k "($session_list)"  smux
