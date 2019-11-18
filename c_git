@@ -68,8 +68,7 @@ else
             echo "Origin pointing to your fork/repo, nothing to do..."
             exit(0)
         fi
-        
-        if [[ $r_project =~ '.git'  ]]
+        if [[ ${r_project: -4} =~ '.git'  ]]
         then
             r_project=${r_project: : -4}
         fi
