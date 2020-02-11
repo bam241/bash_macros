@@ -8,8 +8,10 @@ function smux
     elif [ $# -gt 1 ]; then
         echo "too many parameters..."
     else
-        ssh -t hum tmux attach -t$1
+        export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+        ssh -t hum tmux -CC attach -t$1
     fi
+    unset ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX 
 }
 fping -t1 -c1 -o 128.104.184.177 &>/dev/null
 if [ $? -eq 0 ]; then
