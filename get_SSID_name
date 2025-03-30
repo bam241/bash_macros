@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+ipconfig getsummary en0 |grep "\  SSID :" |cut -d " " -f5
