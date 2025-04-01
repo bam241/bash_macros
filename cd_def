@@ -63,3 +63,22 @@ function cdp
     fi
 }
 compctl -W ${WORK_PATH}/play -/ cdp
+
+
+function cdc
+{
+    CONSULT_PATH=~/SynologyDrive/BapLine_Share/BoulotBaM/Consulting/contrat
+    if [ $# -eq 0 ]; then
+        cd $CONSULT_PATH
+    elif [ $# -gt 1 ]; then
+        echo "too many parameters..."
+    else
+
+        if [ -d ${CONSULT_PATH}/$1 ]; then  
+            cd ${CONSULT_PATH}/$1
+        else
+            echo "$# does not exist as an work folder"
+        fi
+    fi
+}
+compctl -W ${CONSULT_PATH} -/ cdc
