@@ -65,10 +65,9 @@ function cdp
 compctl -W ${WORK_PATH}/play -/ cdp
 
 
-function cdc
+function cdj
 {
-    CONSULT_PATH=~/SynologyDrive/BapLine_Share/BoulotBaM/Consulting/contrat
-    if [ $# -eq 0 ]; then
+        if [ $# -eq 0 ]; then
         cd $CONSULT_PATH
     elif [ $# -gt 1 ]; then
         echo "too many parameters..."
@@ -81,4 +80,4 @@ function cdc
         fi
     fi
 }
-compctl -W ${CONSULT_PATH} -/ cdc
+compctl -W $CONSULT_PATH -/ cdj
